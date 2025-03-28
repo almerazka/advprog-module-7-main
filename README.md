@@ -63,11 +63,11 @@ You can install Postman via this website: https://www.postman.com/downloads/
     -   [x] Write answers of your learning module's "Reflection Publisher-1" questions in this README.
 -   **STAGE 2: Implement services and controllers**
     -   [x] Commit: `Create Notification service struct skeleton.`
-    -   [ ] Commit: `Implement subscribe function in Notification service.`
-    -   [ ] Commit: `Implement subscribe function in Notification controller.`
-    -   [ ] Commit: `Implement unsubscribe function in Notification service.`
-    -   [ ] Commit: `Implement unsubscribe function in Notification controller.`
-    -   [ ] Write answers of your learning module's "Reflection Publisher-2" questions in this README.
+    -   [x] Commit: `Implement subscribe function in Notification service.`
+    -   [x] Commit: `Implement subscribe function in Notification controller.`
+    -   [x] Commit: `Implement unsubscribe function in Notification service.`
+    -   [x] Commit: `Implement unsubscribe function in Notification controller.`
+    -   [x] Write answers of your learning module's "Reflection Publisher-2" questions in this README.
 -   **STAGE 3: Implement notification mechanism**
     -   [ ] Commit: `Implement update method in Subscriber model to send notification HTTP requests.`
     -   [ ] Commit: `Implement notify function in Notification service to notify each Subscriber.`
@@ -99,6 +99,23 @@ This is the place for you to write reflections:
     > **Rust** sendiri mengutamakan _thread safety_, dan jika kita hanya menggunakan **Singleton** dengan _HashMap_ biasa, kita perlu tambahan _synchronization mechanism_ seperti **Mutex** atau **RwLock**. Masalahnya, ini bisa menyebabkan _bottleneck_, terutama jika ada banyak _thread_ yang ingin membaca atau menulis data secara bersamaan. Di sisi lain, **DashMap** sudah didesain untuk menangani _concurrency_ tanpa perlu _locking_ secara eksplisit. Artinya, kita tetap bisa baca dan tulis data dari banyak _thread_ tanpa khawatir mengalami _race condition_.
 </details>
     
-#### Reflection Publisher-2
+<details>
+    <summary><strong> Reflection Publisher-2 💡 </strong></summary>
+    
+1. **In the Model-View Controller (MVC) compound pattern, there is no “Service” and “Repository”. Model in MVC covers both data storage and business logic. Explain based on your understanding of design principles, why we need to separate “Service” and “Repository” from a Model?**
+    > Memisahkan **Service** dan **Repository** dari _Model_ dalam arsitektur **MVC** merupakan langkah yang penting untuk menjaga keteraturan dan kemudahan pemeliharaan kode. Jika semua tanggung jawab, seperti representasi data, akses ke _database_, dan logika bisnis diletakkan dalam _Model_, maka kode akan menjadi sulit dipahami, sulit diuji, serta rentan terhadap perubahan yang tidak terkontrol. Dengan pemisahan ini, **Repository** hanya bertanggung jawab untuk menangani operasi **CRUD** _(Create, Read, Update, Delete)_ terhadap data, seperti membaca atau menulis ke dalam _database_.
+    
+    > Sementara itu, **Service** berfungsi untuk mengelola logika bisnis, termasuk bagaimana data diproses sebelum dikirim ke **controller**. Pendekatan ini sejalan dengan prinsip **Single Responsibility (SRS)** dalam **SOLID**, yang menekankan bahwa setiap komponen dalam sistem harus memiliki tanggung jawab yang jelas dan spesifik. Selain meningkatkan keteraturan kode, pemisahan ini juga membuat sistem lebih fleksibel. Jika suatu saat nanti diperlukan perubahan pada sistem penyimpanan data, misalnya mengganti _database_ yang digunakan, maka hanya bagian **Repository** yang perlu disesuaikan tanpa mengubah logika bisnis di **Service** atau bagian lainnya. Selain itu, pengujian kode juga menjadi lebih mudah karena setiap komponen dapat diuji secara terpisah tanpa saling memengaruhi. Dengan demikian, pendekatan ini menghasilkan kode yang lebih bersih, terstruktur, dan mudah dikembangkan di masa depan.
+  
+2.  **What happens if we only use the Model? Explain your imagination on how the interactions between each model (Program, Subscriber, Notification) affect the code complexity for each model?**
+    >  Jika kita hanya memakai Model seperti **Program**, **Subscriber**, dan **Notification** tanpa memisahkan **Service** dan **Repository**,  semua proses—mulai dari penyimpanan data sampai logika bisnis—akan tertumpuk dalam satu tempat. Akibatnya, kompleksitas kode meningkat, sulit dipahami, dan makin susah dipelihara. Bayangin aja, jika **Program**, **Subscriber**, dan **Notification** langsung saling terhubung tanpa pemisahan tugas, perubahan di satu bagian bisa membuat efek domino ke bagian lain yang mungkin tidak ada hubungannya.
+    
+    > Selain itu, Model akan memiliki terlalu banyak tanggung jawab, mulai dari menangani _query database_ hingga mengirim notifikasi ke API eksternal. Ini bertentangan dengan **Single Responsibility Principle (SRP)** karena satu komponen harus menangani berbagai tugas yang seharusnya dipisahkan. Akibatnya, kode menjadi sulit diuji, rentan terhadap duplikasi, serta kurang fleksibel ketika terjadi perubahan. Dengan demikian, tanpa pemisahan antara Model, **Service**, dan **Repository**, _maintainability_ akan berkurang sehingga sistem menjadi lebih sulit untuk dikembangkan di masa depan.
+
+3. **Have you explored more about Postman? Tell us how this tool helps you to test your current work. You might want to also list which features in Postman you are interested in or feel like it is helpful to help your Group Project or any of your future software engineering projects**
+    > Selama perkuliahan, saya sudah beberapa kali menggunakan **Postman** untuk menguji API. Menurut saya,**Postman** sangat membantu karena memungkinkan saya mengirim request ke server tanpa perlu membuat tampilan terlebih dahulu. Dengan alat ini, saya bisa langsung menguji berbagai metode seperti **GET**, **POST**, **PUT**, dan **DELETE**, sehingga proses _debugging_ dan pengembangan menjadi lebih efisien. Beberapa fitur yang menurut saya sangat berguna adalah _Collections_ untuk menyimpan dan mengelola request, _Environment Variables_ untuk mempermudah konfigurasi API, serta _Automated Testing_ untuk memastikan API bekerja sesuai harapan.
+    
+    > Selain itu, _API Documentation_ di **Postman** memungkinkan tim bekerja lebih efektif dengan dokumentasi yang lebih terstruktur, sehingga semua anggota tim dapat memahami bagaimana API bekerja tanpa perlu komunikasi berulang. **Postman** juga memiliki fitur _Mock Server_ yang memungkinkan pengujian frontend tetap berjalan meskipun _backend_ belum sepenuhnya siap, sehingga pengembangan bisa dilakukan lebih cepat dan paralel. Dengan berbagai fitur ini, Postman menjadi alat yang sangat bermanfaat dalam proyek pengembangan perangkat lunak karena dapat mempercepat pengujian, mengurangi _error_, serta mempermudah kolaborasi dan integrasi antara _frontend_ dan _backend_.
+</details>
 
 #### Reflection Publisher-3
